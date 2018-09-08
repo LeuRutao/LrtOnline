@@ -99,6 +99,7 @@ class OrgHomeView(View):
             'has_fav':has_fav,
         })
 
+
 class OrgCourseView(View):
     """
    机构课程列表页
