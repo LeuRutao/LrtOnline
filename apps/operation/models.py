@@ -6,7 +6,6 @@ from courses.models import Course
 from users.models import UserProfile
 
 
-
 class UserAsk(models.Model):
     name = models.CharField('姓名',max_length=20)
     mobile = models.CharField('手机',max_length=11)
@@ -42,7 +41,6 @@ class CourseComments(models.Model):
     class Meta:
         verbose_name = '课程评论'
         verbose_name_plural = verbose_name
-
 
 
 class UserCourse(models.Model):
