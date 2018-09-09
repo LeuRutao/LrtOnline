@@ -19,7 +19,7 @@ class Course(models.Model):
     learn_times = models.IntegerField("学习时长(分钟数)",default=0)
     students = models.IntegerField("学习人数",default=0)
     fav_nums = models.IntegerField("收藏人数",default=0)
-    image = models.ImageField("封面图",upload_to="courses/%Y/%m",max_length=100, blank=True)
+    image = models.ImageField("封面图",upload_to="courses/%Y/%m",max_length=100, blank=True,default='')
     click_nums = models.IntegerField("点击数",default=0)
     tag = models.CharField('课程标签', default='', max_length=10,null=True,blank=True)
     add_time = models.DateTimeField("添加时间",default=datetime.now,)
@@ -28,6 +28,8 @@ class Course(models.Model):
     teacher = models.ForeignKey(Teacher,verbose_name="讲师",null=True,blank=True,on_delete=models.CASCADE)
     youneed_know = models.CharField('课程须知', max_length=300, default='')
     teacher_tell = models.CharField('老师告诉你', max_length=300, default='')
+    announcement = models.CharField('课程公告', max_length=300, default='', blank=True)
+
 
     class Meta:
         verbose_name = "课程"

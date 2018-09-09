@@ -58,7 +58,8 @@ class CourseDetailView(View):
         tag = course.tag
         if tag:
             # 需要从1开始不然会推荐自己
-            relate_courses = Course.objects.filter(tag=tag)[1:3]
+            relate_courses = Course.objects.filter(tag=tag).exclude(id=course.id)[:3]
+
         else:
             relate_courses = []
         return  render(request, "course-detail.html", {
@@ -73,8 +74,6 @@ class CourseInfoView(LoginRequiredMixin, View):
     '''课程章节信息'''
     def get(self,request,course_id):
         course = Course.objects.get(id=int(course_id))
-        course.students += 1
-        course.save()
 
         # 查询用户是否已经学习了该课程
         user_courses = UserCourse.objects.filter(user=request.user, course=course)
@@ -82,6 +81,8 @@ class CourseInfoView(LoginRequiredMixin, View):
             # 如果没有学习该门课程就关联起来
             user_course = UserCourse(user=request.user, course=course)
             user_course.save()
+            course.students += 1
+            course.save()
 
         # 相关课程推荐
         # 找到学习这门课的所有用户
@@ -170,15 +171,14 @@ class VideoPlayView(LoginRequiredMixin, View):
         #通过外键找到章节再找到视频对应的课程
         course = video.lesson.course
 
-        course.students += 1
-        course.save()
-
         # 查询用户是否已经学习了该课程
         user_courses = UserCourse.objects.filter(user=request.user,course=course)
         if not user_courses:
             # 如果没有学习该门课程就关联起来
             user_course = UserCourse(user=request.user,course=course)
             user_course.save()
+            course.students += 1
+            course.save()
 
         #相关课程推荐
         # 找到学习这门课的所有用户
