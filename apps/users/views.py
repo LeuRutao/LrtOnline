@@ -355,7 +355,7 @@ class IndexView(View):
         })
 
 
-def pag_not_found(request):
+def page_not_found(request):
     # 全局404处理函数
     response = render_to_response('404.html', {})
     response.status_code = 404

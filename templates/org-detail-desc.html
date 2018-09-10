@@ -9,7 +9,9 @@
             <h1>机构介绍</h1>
         </div>
         <div class="des">
-            <p>{{ course_org.desc }}</p>
+            {% autoescape off %}
+                {{ course_org.desc }}
+            {% endautoescape %}
         </div>
     </div>
 {% endblock %}

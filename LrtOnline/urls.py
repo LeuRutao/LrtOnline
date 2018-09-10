@@ -22,8 +22,7 @@ from users import views
 from users.views import IndexView, LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, LogoutView
 from organization.views import OrgView
 from django.views.static import serve
-from LrtOnline.settings import MEDIA_ROOT, STATIC_ROOT
-
+from LrtOnline.settings import MEDIA_ROOT
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
@@ -48,12 +47,15 @@ urlpatterns = [
 
     path('logout/', LogoutView.as_view(), name="logout"),
 
+    # 富文本编辑器url
+    path('ueditor/',include('DjangoUeditor.urls' )),
+
     #静态文件
-    re_path(r'^static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT }),
+    # re_path(r'^static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT }),
 ]
 
 
 # 全局404页面配置
-handler404 = 'users.views.pag_not_found'
+handler404 = 'users.views.page_not_found'
 # 全局500页面配置
 handler500 = 'users.views.page_error'

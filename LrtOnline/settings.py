@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 SECRET_KEY = '!bsg6ch!f39b-4ue4l*9oe+#uk#*qwjcjb*&oosgxht$+jvdqz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'captcha',
     'pure_pagination',
+    'DjangoUeditor',
 ]
 
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -146,9 +147,9 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
@@ -165,4 +166,4 @@ EMAIL_FROM = 'lrtonline@sina.com'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')   #指定根目录
 
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+# STATIC_ROOT = os.path.join(BASE_DIR,'static')

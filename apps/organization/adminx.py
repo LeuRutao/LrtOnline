@@ -18,9 +18,12 @@ class CityDictAdmin(object):
 class CourseOrgAdmin(object):
     '''机构'''
 
-    list_display = ['name', 'desc', 'click_nums', 'fav_nums', 'add_time']
+    list_display = ['name', 'desc', 'click_nums', 'fav_nums', 'add_time', 'course_nums']
     search_fields = ['name', 'desc', 'click_nums', 'fav_nums']
     list_filter = ['name', 'desc', 'click_nums', 'fav_nums', 'city__name', 'address', 'add_time']
+
+    # detail就是要显示为富文本的字段名
+    style_fields = {"desc": "ueditor"}
 
 
 class TeacherAdmin(object):
