@@ -29,6 +29,7 @@ class Course(models.Model):
     youneed_know = models.CharField('课程须知', max_length=300, default='')
     teacher_tell = models.CharField('老师告诉你', max_length=300, default='')
     announcement = models.CharField('课程公告', max_length=300, default='', blank=True)
+    is_banner = models.BooleanField('是否轮播', default=False)
 
 
     class Meta:

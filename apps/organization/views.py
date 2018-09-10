@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 
 from django.views.generic import View
@@ -20,6 +21,14 @@ class OrgView(View):
 
         # 所有城市
         all_citys = CityDict.objects.all()
+
+        # 机构搜索功能
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            # 在name字段进行操作,做like语句的操作。i代表不区分大小写
+            # or操作使用Q
+            all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
+
         # 城市筛选
         city_id = request.GET.get('city','')
         if city_id:
@@ -87,6 +96,10 @@ class OrgHomeView(View):
         current_page = 'home'
         # 根据id找到课程机构
         course_org = CourseOrg.objects.get(id=int(org_id))
+
+        course_org.click_nums += 1
+        course_org.save()
+
         # 判断收藏状态
         has_fav = False
         if request.user.is_authenticated:
@@ -174,6 +187,13 @@ class TeacherListView(View):
         # 总共有多少老师使用count进行统计
         teacher_nums = all_teachers.count()
 
+        # 搜索功能
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            # 在name字段进行操作,做like语句的操作。i代表不区分大小写
+            # or操作使用Q
+            all_teachers = all_teachers.filter(name__icontains=search_keywords)
+
         # 人气排序
         sort = request.GET.get('sort','')
         if sort:
@@ -202,6 +222,9 @@ class TeacherDetailView(View):
     def get(self, request, teacher_id):
         teacher = Teacher.objects.get(id=int(teacher_id))
         all_courses = Course.objects.filter(teacher=teacher)
+
+        teacher.click_nums += 1
+        teacher.save()
 
         # 教师收藏和机构收藏
         has_teacher_faved = False

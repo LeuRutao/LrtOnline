@@ -19,14 +19,15 @@ import xadmin
 
 from django.views.generic import  TemplateView
 from users import views
-from users.views import LoginView,RegisterView,ActiveUserView,ForgetPwdView,ResetView,ModifyPwdView
+from users.views import IndexView, LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, LogoutView
 from organization.views import OrgView
 from django.views.static import serve
-from LrtOnline.settings import MEDIA_ROOT
+from LrtOnline.settings import MEDIA_ROOT, STATIC_ROOT
+
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html'),name='index'),
+    path('', IndexView.as_view(),name='index'),
     path('login/', LoginView.as_view(), name='login'),
     path('register/',RegisterView.as_view(),name = 'register'),
     path('captcha/',include('captcha.urls')),
@@ -42,4 +43,17 @@ urlpatterns = [
 
     path("course/", include('courses.urls', namespace="course")),
 
+    #个人信息
+    path("users/", include('users.urls', namespace="users")),
+
+    path('logout/', LogoutView.as_view(), name="logout"),
+
+    #静态文件
+    re_path(r'^static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT }),
 ]
+
+
+# 全局404页面配置
+handler404 = 'users.views.pag_not_found'
+# 全局500页面配置
+handler500 = 'users.views.page_error'

@@ -31,7 +31,6 @@ class UserMessage(models.Model):
         verbose_name_plural = verbose_name
 
 
-
 class CourseComments(models.Model):
     user = models.ForeignKey(UserProfile,verbose_name='用户',on_delete=models.CASCADE)
     course = models.ForeignKey(Course,verbose_name='课程',on_delete=models.CASCADE)

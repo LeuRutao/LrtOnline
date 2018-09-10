@@ -33,6 +33,7 @@ class CourseOrg(models.Model):
     address = models.CharField('机构地址',max_length=150,)
     city = models.ForeignKey(CityDict,verbose_name='所在城市',on_delete=models.CASCADE)
     add_time = models.DateTimeField(default=datetime.now)
+    tag = models.CharField('机构标签', max_length=10, default='全国知名')
 
     class Meta:
         verbose_name = '课程机构'
@@ -62,6 +63,9 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = '教师'
         verbose_name_plural = verbose_name
+
+    def get_course_nums(self):
+        return self.course_set.all().count()
 
     def __str__(self):
         return "[{0}]的教师: {1}".format(self.org, self.name)
